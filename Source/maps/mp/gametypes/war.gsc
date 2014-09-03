@@ -65,6 +65,7 @@ onStartGameType()
     setDvar("ui_gametype", "Arms Race");
     setDvar("didyouknow", "Arms Race modification made by Siilwyn. ^0(0.0)");
 
+    setDvar("scr_war_timelimit", 15);
     setDvar("scr_war_scorelimit", 26);
 
     level.highestWeaponIndex = [];
