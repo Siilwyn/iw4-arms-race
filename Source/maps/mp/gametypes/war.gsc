@@ -58,14 +58,18 @@ onStartGameType()
     setObjectiveHintText("allies", "Master your arsenal.");
     setObjectiveHintText("axis", "Master your arsenal.");
 
-    setDvarIfUninitialized("scr_ar_fmj", 0);
-    setDvarIfUninitialized("scr_ar_requiredKills", 2);
+    setDvarIfUninitialized("scr_ar_vampirism", 0);
 
-    level.fmj = getDvarInt("scr_ar_fmj");
-    level.requiredKills = getDvarInt("scr_ar_requiredKills");
+    level.fmj = getDvarInt("scr_ar_vampirism");
 
     setDvar("ui_gametype", "Arms Race");
     setDvar("didyouknow", "Arms Race modification made by Siilwyn. ^0(0.0)");
+
+    setDvar("scr_war_scorelimit", 26);
+
+    level.highestWeaponIndex = [];
+    level.highestWeaponIndex["allies"] = 0;
+    level.highestWeaponIndex["axis"] = 0;
 
     level.spawnMins = (0, 0, 0);
     level.spawnMaxs = (0, 0, 0);
@@ -268,20 +272,20 @@ onPlayerKilled(eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon, vDir, sHit
     if(isPlayer(attacker) && attacker != self && sMeansOfDeath != "MOD_MELEE")
     {
         attacker.weaponIndex++;
-        attacker giveOneWeapon(level.weapons[attacker.weaponIndex]);
+        attacker thread giveOneWeapon(level.weapons[attacker.weaponIndex]);
+
         if(attacker.weaponIndex > 26)
         {
             attacker.finalKill = true;
             maps\mp\gametypes\_gamelogic::endGame(attacker.team, "Mastered the arsenal");
-            attacker.finalKill = true;
         }
-        //attacker maps\mp\gametypes\_gamescore::giveTeamScoreForObjective(attacker.pers["team"], 1);
     }
     else if(self.weaponIndex > 0)
     {
         self.weaponIndex--;
-        //self maps\mp\gametypes\_gamescore::giveTeamScoreForObjective(self.pers["team"], -1);
     }
+
+    updateTeamscores();
 }
 
 giveOneWeapon(weapon)
@@ -291,4 +295,18 @@ giveOneWeapon(weapon)
     self giveWeapon(weaponMp, 0, false);
     wait (0.10);
     self switchToWeapon(weaponMp, 0, false);
+}
+
+updateTeamscores()
+{
+    foreach(player in level.players)
+    {
+        if(player.weaponIndex > level.highestWeaponIndex[player.team])
+            level.highestWeaponIndex[player.team] = player.weaponIndex;
+    }
+
+    game["teamScores"]["allies"] = level.highestWeaponIndex["allies"];
+    setTeamScore("allies", level.highestWeaponIndex["allies"]);
+    game["teamScores"]["axis"] = level.highestWeaponIndex["axis"];
+    setTeamScore("axis", level.highestWeaponIndex["axis"]);
 }
