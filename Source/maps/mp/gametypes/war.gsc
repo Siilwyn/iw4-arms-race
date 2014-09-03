@@ -53,8 +53,8 @@ onStartGameType()
 
     setObjectiveText("allies", "Eliminate the enemy.");
     setObjectiveText("axis", "Eliminate the enemy.");
-    setObjectiveScoreText("allies", "Kill enemies to advance your weapon rank. First to x kills win.");
-    setObjectiveScoreText("axis", "Kill enemies to advance your weapon rank. First to x kills win.");
+    setObjectiveScoreText("allies", "Kill enemies to advance your weapon rank. First to get a kill with the last weapon wins.");
+    setObjectiveScoreText("axis", "Kill enemies to advance your weapon rank. First to get a kill with the last weapon wins.");
     setObjectiveHintText("allies", "Master your arsenal.");
     setObjectiveHintText("axis", "Master your arsenal.");
 
