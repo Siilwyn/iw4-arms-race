@@ -60,7 +60,7 @@ onStartGameType()
 
     setDvarIfUninitialized("scr_ar_vampirism", 0);
 
-    level.fmj = getDvarInt("scr_ar_vampirism");
+    level.vampirism = getDvarInt("scr_ar_vampirism");
 
     setDvar("ui_gametype", "Arms Race");
     setDvar("didyouknow", "Arms Race modification made by Siilwyn. ^0(0.0)");
