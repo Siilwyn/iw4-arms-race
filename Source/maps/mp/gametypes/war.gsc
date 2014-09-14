@@ -136,7 +136,7 @@ setSpecialLoadouts()
     level.weapons[22] = "usp";
     level.weapons[23] = "deserteagle";
     level.weapons[24] = "pp2000";
-    level.weapons[25] = "beretta_akimbo";
+    level.weapons[25] = "beretta";
     level.weapons[26] = "throwingknife";
 }
 
